@@ -7,6 +7,7 @@ from phonenumbers.data import _COUNTRY_CODE_TO_REGION_CODE
 from django.utils import translation
 from django.forms import Select, TextInput
 from django.forms.widgets import MultiWidget
+from django.utils.translation import to_locale
 
 from phonenumber_field.phonenumber import PhoneNumber
 
@@ -17,7 +18,7 @@ class PhonePrefixSelect(Select):
 
     def __init__(self, initial=None):
         choices = [('', '---------')]
-        locale = Locale(translation.to_locale(translation.get_language()))
+        locale = Locale(to_locale(translation.to_locale(translation.get_language())))
         for prefix, values in _COUNTRY_CODE_TO_REGION_CODE.iteritems():
             prefix = '+%d' % prefix
             if initial and initial in values:
